@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Super Nexon: Radhesh Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <!-- Background element for glassmorphism effect -->
+    <div class="bg-layer"></div>
+
+    <div id="game-container">
+      <!-- The main game canvas -->
+      <canvas id="gameCanvas"></canvas>
+
+      <!-- UI Overlays -->
+      
+      <!-- Start Menu -->
+      <div id="start-menu" class="glass-panel">
+        <h1>Super Nexon: Radhesh Edition 🏎️</h1>
+        <p>Get ready to drive the Electric Blue Tata Nexon!</p>
+        <div class="instructions">
+          Use <strong>Arrow Keys</strong> or <strong>WASD</strong> to move.<br>
+          Dodge obstacles (🚗, 🪨) and collect power-ups (🚀, 🛡️, 🪙)!<br>
+          <em>Press CTRL while in Turbo to shoot!</em><br>
+          <em>Press R, G, B, or Y to change car color!</em>
+        </div>
+        <button id="start-btn" class="btn primary-btn">START RACING!</button>
+      </div>
+
+      <!-- Level Up / Transition Menu -->
+      <div id="level-menu" class="glass-panel hidden">
+        <h1 id="level-title">Level 2!</h1>
+        <p id="level-desc">Watch out for the Rain! 🌧️ The road is slippery.</p>
+        <button id="continue-btn" class="btn primary-btn">CONTINUE</button>
+      </div>
+
+      <!-- Game Over Menu -->
+      <div id="game-over-menu" class="glass-panel hidden">
+        <h1 id="game-over-title">Game Over! 💥</h1>
+        <p>Your Score: <span id="final-score">0</span></p>
+
+        <!-- Leaderboard Entry -->
+        <div id="leaderboard-entry" class="hidden">
+          <p style="color: #00ffcc; font-weight: bold; margin: 10px 0;">🎉 NEW HIGH SCORE! 🎉</p>
+          <input type="text" id="player-name" placeholder="Enter your name, Champion!" maxlength="15">
+          <button id="save-score-btn" class="btn primary-btn" style="font-size: 1rem; padding: 10px 20px;">Save Score</button>
+        </div>
+
+        <!-- Leaderboard Display -->
+        <div id="leaderboard-display" class="hidden">
+          <h3>Top Racers 🏆</h3>
+          <ul id="leaderboard-list"></ul>
+        </div>
+
+        <button id="restart-btn" class="btn primary-btn" style="margin-top: 15px;">PLAY AGAIN</button>
+      </div>
+
+      <!-- HUD (Heads Up Display) -->
+      <div id="hud" class="hidden">
+        <div class="hud-item glass-pill">
+          <span>Score: <span id="score-display">0</span></span>
+        </div>
+        <div class="hud-item glass-pill">
+          <span>Level: <span id="level-display">1</span></span>
+        </div>
+        <div id="active-powerup" class="hud-item glass-pill hidden">
+            <span id="powerup-icon">🚀</span>
+        </div>
+      </div>
+
+      <!-- Rain Effect Overlay (Only visible on level 2) -->
+      <div id="rain-overlay" class="hidden"></div>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
