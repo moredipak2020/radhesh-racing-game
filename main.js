@@ -216,7 +216,12 @@ function displayLeaderboard() {
     leaderboard.forEach((entry, index) => {
         const li = document.createElement('li');
         if (index === 0) li.className = 'rank-1';
-        li.innerHTML = `<span>#${index + 1} ${entry.name}</span> <span>${entry.score} pts</span>`;
+        const spanRank = document.createElement('span');
+        spanRank.textContent = `#${index + 1} ${entry.name}`;
+        const spanScore = document.createElement('span');
+        spanScore.textContent = `${entry.score} pts`;
+        li.appendChild(spanRank);
+        li.appendChild(spanScore);
         leaderboardList.appendChild(li);
     });
     leaderboardEntry.classList.add('hidden');

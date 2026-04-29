@@ -33,7 +33,14 @@ export default async function handler(req, res) {
     try {
       let { name, score } = req.body;
       if (!name) name = 'Anonymous Racer';
-      if (score === undefined) return res.status(400).json({ error: 'Missing score' });
+      if (typeof name !== 'string') name = String(name);
+      
+      // Prevent hackers from flooding the DB with massive strings
+      name = name.substring(0, 15).replace(/[<>]/g, ''); // Max 15 chars, strip basic HTML tags just in case
+      
+      // Prevent hackers from submitting fake billion-point scores or invalid data
+      if (typeof score !== 'number') return res.status(400).json({ error: 'Invalid score format' });
+      if (score < 0 || score > 200000) return res.status(400).json({ error: 'Score out of realistic bounds' });
       
       // Add the score to the Redis Sorted Set
       // Use ZADD, member is the player name, score is their points
