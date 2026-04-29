@@ -298,6 +298,8 @@ const btnBlast = document.getElementById('btn-blast');
 
 if (isTouchDevice) {
     mobileControls.classList.remove('hidden');
+    document.getElementById('pc-instructions').classList.add('hidden');
+    document.getElementById('mobile-instructions').classList.remove('hidden');
 
     // D-Pad
     const setupTouchBtn = (id, keyName) => {
