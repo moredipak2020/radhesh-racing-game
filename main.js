@@ -129,7 +129,7 @@ const SoundManager = {
         if(engineOsc) return;
         engineOsc = audioCtx.createOscillator();
         engineOsc.type = 'triangle'; // Changed from sawtooth to triangle to remove harshness
-        engineOsc.frequency.value = 75; // Reduced from 100Hz to 75Hz as requested
+        engineOsc.frequency.value = 100; // Put back to 100Hz
         
         engineFilter = audioCtx.createBiquadFilter();
         engineFilter.type = 'lowpass';
@@ -146,7 +146,7 @@ const SoundManager = {
     },
     updateEngine: function(isAccelerating) {
         if(!engineOsc) return;
-        const targetFreq = isAccelerating ? 180 : 75;
+        const targetFreq = isAccelerating ? 200 : 100;
         const targetVol = isAccelerating ? 0.6 : 0.4;
         const targetFilter = isAccelerating ? 600 : 150;
         
