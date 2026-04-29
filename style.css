@@ -351,16 +351,19 @@ body {
     width: 100%;
     background: #111;
     border-top: 2px solid rgba(255, 255, 255, 0.1);
-    padding: 15px;
+    padding: 10px 5px;
     align-items: center;
     box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
     z-index: 20;
     pointer-events: auto; /* Since it's outside game view now, we can enable it */
+    justify-content: space-evenly;
   }
 
   .glass-panel {
-    padding: 20px;
-    width: 90%;
+    padding: 15px;
+    width: 95%;
+    max-height: 95%;
+    overflow-y: auto;
   }
 
   .glass-panel h1 {
@@ -377,26 +380,32 @@ body {
     font-size: 1rem;
   }
 
-  /* BIGGER CONTROLS */
+  /* BIGGER CONTROLS - Scaled with Viewport Width */
   .dpad-btn {
-    width: 60px;
-    height: 60px;
-    font-size: 1.5rem;
+    width: 13vw;
+    height: 13vw;
+    max-width: 60px;
+    max-height: 60px;
+    font-size: 1.2rem;
   }
 
   .dpad-middle {
-    gap: 45px;
+    gap: 10vw;
   }
 
   .action-btn {
-    width: 75px;
-    height: 75px;
-    font-size: 2rem;
+    width: 16vw;
+    height: 16vw;
+    max-width: 75px;
+    max-height: 75px;
+    font-size: 1.5rem;
   }
 
   .color-btn {
-    width: 35px;
-    height: 35px;
+    width: 8vw;
+    height: 8vw;
+    max-width: 35px;
+    max-height: 35px;
   }
 }
 
