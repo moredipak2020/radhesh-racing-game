@@ -12,8 +12,9 @@
     <div class="bg-layer"></div>
 
     <div id="game-container">
-      <!-- The main game canvas -->
-      <canvas id="gameCanvas"></canvas>
+      <div id="game-view">
+        <!-- The main game canvas -->
+        <canvas id="gameCanvas"></canvas>
 
       <!-- UI Overlays -->
       
@@ -74,15 +75,12 @@
       <!-- Rain Effect Overlay (Only visible on level 2) -->
       <div id="rain-overlay" class="hidden"></div>
 
+      </div> <!-- End of game-view -->
+
       <!-- Mobile Controls Overlay -->
       <div id="mobile-controls" class="hidden">
-        <div id="dpad">
-          <button id="btn-up" class="dpad-btn glass-btn">▲</button>
-          <div class="dpad-middle">
-            <button id="btn-left" class="dpad-btn glass-btn">◀</button>
-            <button id="btn-right" class="dpad-btn glass-btn">▶</button>
-          </div>
-          <button id="btn-down" class="dpad-btn glass-btn">▼</button>
+        <div id="action-btn-container">
+          <button id="btn-blast" class="glass-btn action-btn disabled">🚀</button>
         </div>
 
         <div id="color-picker">
@@ -92,8 +90,13 @@
           <button id="btn-color-g" class="color-btn" style="background: #33cc33;"></button>
         </div>
 
-        <div id="action-btn-container">
-          <button id="btn-blast" class="glass-btn action-btn disabled">🚀</button>
+        <div id="dpad">
+          <button id="btn-up" class="dpad-btn glass-btn">▲</button>
+          <div class="dpad-middle">
+            <button id="btn-left" class="dpad-btn glass-btn">◀</button>
+            <button id="btn-right" class="dpad-btn glass-btn">▶</button>
+          </div>
+          <button id="btn-down" class="dpad-btn glass-btn">▼</button>
         </div>
       </div>
     </div>

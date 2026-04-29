@@ -35,7 +35,6 @@ body {
   z-index: 0;
 }
 
-/* The main container holding canvas and UI */
 #game-container {
   position: relative;
   width: 100%;
@@ -47,6 +46,17 @@ body {
   overflow: hidden;
   z-index: 1;
   background: #222;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Wrapper for canvas and overlays */
+#game-view {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  overflow: hidden;
 }
 
 /* Canvas is the game world */
@@ -325,13 +335,27 @@ body {
 /* Mobile Media Query for Sizing and Spacing */
 @media (max-width: 768px) {
   body {
-    padding: 5dvh 5vw; /* Leaves 5-10% space around the screen */
+    padding: 2dvh 2vw; /* Slight space around screen */
   }
   
   #game-container {
     width: 100%;
     height: 100%;
     border-radius: 15px;
+  }
+
+  /* Make mobile-controls a solid panel at the bottom */
+  #mobile-controls {
+    position: relative;
+    bottom: auto; left: auto; right: auto;
+    width: 100%;
+    background: #111;
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    align-items: center;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+    z-index: 20;
+    pointer-events: auto; /* Since it's outside game view now, we can enable it */
   }
 
   .glass-panel {
@@ -353,25 +377,26 @@ body {
     font-size: 1rem;
   }
 
+  /* BIGGER CONTROLS */
   .dpad-btn {
-    width: 45px;
-    height: 45px;
-    font-size: 1rem;
-  }
-
-  .dpad-middle {
-    gap: 35px;
-  }
-
-  .action-btn {
     width: 60px;
     height: 60px;
     font-size: 1.5rem;
   }
 
+  .dpad-middle {
+    gap: 45px;
+  }
+
+  .action-btn {
+    width: 75px;
+    height: 75px;
+    font-size: 2rem;
+  }
+
   .color-btn {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
   }
 }
 

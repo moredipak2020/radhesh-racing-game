@@ -129,14 +129,14 @@ const SoundManager = {
         if(engineOsc) return;
         engineOsc = audioCtx.createOscillator();
         engineOsc.type = 'sawtooth';
-        engineOsc.frequency.value = 50; 
+        engineOsc.frequency.value = 100; // Increased base frequency for mobile speakers
         
         engineFilter = audioCtx.createBiquadFilter();
         engineFilter.type = 'lowpass';
-        engineFilter.frequency.value = 200;
+        engineFilter.frequency.value = 400;
 
         engineGain = audioCtx.createGain();
-        engineGain.gain.value = 0.1; 
+        engineGain.gain.value = 0.2; 
 
         engineOsc.connect(engineFilter);
         engineFilter.connect(engineGain);
@@ -146,9 +146,9 @@ const SoundManager = {
     },
     updateEngine: function(isAccelerating) {
         if(!engineOsc) return;
-        const targetFreq = isAccelerating ? 120 : 50;
-        const targetVol = isAccelerating ? 0.3 : 0.1;
-        const targetFilter = isAccelerating ? 800 : 200;
+        const targetFreq = isAccelerating ? 250 : 100;
+        const targetVol = isAccelerating ? 0.5 : 0.2;
+        const targetFilter = isAccelerating ? 1200 : 400;
         
         engineOsc.frequency.setTargetAtTime(targetFreq, audioCtx.currentTime, 0.1);
         engineGain.gain.setTargetAtTime(targetVol, audioCtx.currentTime, 0.1);
@@ -162,6 +162,15 @@ const SoundManager = {
         }
     }
 };
+
+// Fix for background/lock-screen audio noise
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+        if (audioCtx.state === 'running') audioCtx.suspend();
+    } else {
+        if (isPlaying && audioCtx.state === 'suspended') audioCtx.resume();
+    }
+});
 
 // Leaderboard & Confetti Logic
 let leaderboard = JSON.parse(localStorage.getItem('nexonLeaderboard')) || [];
