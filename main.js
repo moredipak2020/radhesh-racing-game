@@ -128,15 +128,15 @@ const SoundManager = {
         if(audioCtx.state === 'suspended') audioCtx.resume();
         if(engineOsc) return;
         engineOsc = audioCtx.createOscillator();
-        engineOsc.type = 'triangle'; // Changed from sawtooth to triangle to remove harshness
-        engineOsc.frequency.value = 150; // Bumped to 150Hz
+        engineOsc.type = 'square'; // Square wave is much louder and more audible on phones
+        engineOsc.frequency.value = 150; 
         
         engineFilter = audioCtx.createBiquadFilter();
         engineFilter.type = 'lowpass';
-        engineFilter.frequency.value = 150; // Cut off high frequencies to make it a deep purr
+        engineFilter.frequency.value = 600; // Open up the filter so it's not muffled
 
         engineGain = audioCtx.createGain();
-        engineGain.gain.value = 0.4; // Triangle is quieter perceptually, slight boost
+        engineGain.gain.value = 0.6; // Boost base volume significantly
 
         engineOsc.connect(engineFilter);
         engineFilter.connect(engineGain);
@@ -147,8 +147,8 @@ const SoundManager = {
     updateEngine: function(isAccelerating) {
         if(!engineOsc) return;
         const targetFreq = isAccelerating ? 250 : 150;
-        const targetVol = isAccelerating ? 0.6 : 0.4;
-        const targetFilter = isAccelerating ? 600 : 150;
+        const targetVol = isAccelerating ? 0.9 : 0.6;
+        const targetFilter = isAccelerating ? 1500 : 600;
         
         engineOsc.frequency.setTargetAtTime(targetFreq, audioCtx.currentTime, 0.1);
         engineGain.gain.setTargetAtTime(targetVol, audioCtx.currentTime, 0.1);
