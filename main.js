@@ -128,15 +128,15 @@ const SoundManager = {
         if(audioCtx.state === 'suspended') audioCtx.resume();
         if(engineOsc) return;
         engineOsc = audioCtx.createOscillator();
-        engineOsc.type = 'sawtooth';
-        engineOsc.frequency.value = 100; // Increased base frequency for mobile speakers
+        engineOsc.type = 'triangle'; // Changed from sawtooth to triangle to remove harshness
+        engineOsc.frequency.value = 75; // Reduced from 100Hz to 75Hz as requested
         
         engineFilter = audioCtx.createBiquadFilter();
         engineFilter.type = 'lowpass';
-        engineFilter.frequency.value = 400;
+        engineFilter.frequency.value = 150; // Cut off high frequencies to make it a deep purr
 
         engineGain = audioCtx.createGain();
-        engineGain.gain.value = 0.2; 
+        engineGain.gain.value = 0.4; // Triangle is quieter perceptually, slight boost
 
         engineOsc.connect(engineFilter);
         engineFilter.connect(engineGain);
@@ -146,9 +146,9 @@ const SoundManager = {
     },
     updateEngine: function(isAccelerating) {
         if(!engineOsc) return;
-        const targetFreq = isAccelerating ? 250 : 100;
-        const targetVol = isAccelerating ? 0.5 : 0.2;
-        const targetFilter = isAccelerating ? 1200 : 400;
+        const targetFreq = isAccelerating ? 180 : 75;
+        const targetVol = isAccelerating ? 0.6 : 0.4;
+        const targetFilter = isAccelerating ? 600 : 150;
         
         engineOsc.frequency.setTargetAtTime(targetFreq, audioCtx.currentTime, 0.1);
         engineGain.gain.setTargetAtTime(targetVol, audioCtx.currentTime, 0.1);
