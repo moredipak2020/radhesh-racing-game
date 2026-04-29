@@ -282,6 +282,36 @@ window.addEventListener('keyup', (e) => {
     if (e.key === 'Control') keys.Control = false;
 });
 
+// Mobile Controls Setup
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+const mobileControls = document.getElementById('mobile-controls');
+const btnBlast = document.getElementById('btn-blast');
+
+if (isTouchDevice) {
+    mobileControls.classList.remove('hidden');
+
+    // D-Pad
+    const setupTouchBtn = (id, keyName) => {
+        const btn = document.getElementById(id);
+        btn.addEventListener('touchstart', (e) => { e.preventDefault(); keys[keyName] = true; });
+        btn.addEventListener('touchend', (e) => { e.preventDefault(); keys[keyName] = false; });
+    };
+    setupTouchBtn('btn-up', 'ArrowUp');
+    setupTouchBtn('btn-down', 'ArrowDown');
+    setupTouchBtn('btn-left', 'ArrowLeft');
+    setupTouchBtn('btn-right', 'ArrowRight');
+
+    // Blast Button
+    btnBlast.addEventListener('touchstart', (e) => { e.preventDefault(); keys.Control = true; });
+    btnBlast.addEventListener('touchend', (e) => { e.preventDefault(); keys.Control = false; });
+
+    // Color Buttons
+    document.getElementById('btn-color-b').addEventListener('touchstart', (e) => { e.preventDefault(); currentHueRotation = 0; });
+    document.getElementById('btn-color-r').addEventListener('touchstart', (e) => { e.preventDefault(); currentHueRotation = 150; });
+    document.getElementById('btn-color-y').addEventListener('touchstart', (e) => { e.preventDefault(); currentHueRotation = 210; });
+    document.getElementById('btn-color-g').addEventListener('touchstart', (e) => { e.preventDefault(); currentHueRotation = 270; });
+}
+
 // Player Object
 const player = {
     x: GAME_WIDTH / 2 - 30, y: GAME_HEIGHT - 150,
@@ -377,6 +407,7 @@ function updatePlayer() {
         player.powerupTimer--;
         if (player.powerupTimer === 0) {
             player.isShielded = false; player.isTurbo = false; activePowerup.classList.add('hidden');
+            if (isTouchDevice) btnBlast.classList.add('disabled');
         }
     }
 }
@@ -442,6 +473,7 @@ function applyPowerup(type) {
     } else if (type === 'turbo') {
         SoundManager.playRocket();
         player.isTurbo = true; player.isShielded = true; player.powerupTimer = 300; powerupIcon.innerText = '🚀';
+        if (isTouchDevice) btnBlast.classList.remove('disabled');
     }
 }
 
