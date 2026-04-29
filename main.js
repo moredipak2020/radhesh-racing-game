@@ -173,14 +173,41 @@ document.addEventListener("visibilitychange", () => {
 });
 
 // Leaderboard & Confetti Logic
-let leaderboard = JSON.parse(localStorage.getItem('nexonLeaderboard')) || [];
+let leaderboard = [];
 
-function saveScore() {
+// Fetch initial leaderboard on load
+async function fetchLeaderboard() {
+    try {
+        const res = await fetch('/api/leaderboard');
+        if (res.ok) {
+            leaderboard = await res.json();
+        }
+    } catch (e) {
+        console.error('Failed to load global leaderboard', e);
+    }
+}
+fetchLeaderboard();
+
+async function saveScore() {
     const name = playerNameInput.value.trim() || 'Anonymous Racer';
-    leaderboard.push({ name: name, score: score });
-    leaderboard.sort((a, b) => b.score - a.score);
-    leaderboard = leaderboard.slice(0, 5); // Top 5
-    localStorage.setItem('nexonLeaderboard', JSON.stringify(leaderboard));
+    saveScoreBtn.disabled = true;
+    saveScoreBtn.innerText = 'Saving...';
+    
+    try {
+        await fetch('/api/leaderboard', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, score })
+        });
+        
+        // Refresh the leaderboard
+        await fetchLeaderboard();
+    } catch (e) {
+        console.error('Error saving score', e);
+    }
+    
+    saveScoreBtn.disabled = false;
+    saveScoreBtn.innerText = 'Save Score';
     displayLeaderboard();
 }
 
